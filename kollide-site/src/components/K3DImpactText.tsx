@@ -65,3 +65,4 @@ export default function K3DImpactText() {
     </section>
   );
 }
+

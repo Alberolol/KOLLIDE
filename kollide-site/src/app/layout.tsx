@@ -18,7 +18,7 @@ export const metadata: Metadata = {
   title: "KOLLIDE — Advanced 3D Design & Printing",
   description:
     "KOLLIDE unifies K3D (football helmet innovation) and MTL3D (on‑demand 3D printing in Montreal).",
-  metadataBase: new URL("https://example.com"),
+  metadataBase: new URL("https://kollide-nu.vercel.app"),
 };
 
 export default function RootLayout({
