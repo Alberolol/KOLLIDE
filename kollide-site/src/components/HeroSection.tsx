@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect, useRef, useState } from "react";
+import { useEffect, useRef } from "react";
 import React from "react";
 import { motion, useScroll, useTransform } from "framer-motion";
 import Image from "next/image";
@@ -8,7 +8,7 @@ import Link from "next/link";
 import ImpactText from "./ImpactText";
 
 // TwoBoxSection component with synchronized background animation
-function TwoBoxSection({ teamScrollProgress }: { teamScrollProgress: any }) {
+function TwoBoxSection({ teamScrollProgress }: { teamScrollProgress: import('framer-motion').MotionValue<number> }) {
   // Use the team section's scroll progress for background animation
   const backgroundColor = useTransform(
     teamScrollProgress,
@@ -140,9 +140,6 @@ const TeamSection = React.forwardRef<HTMLDivElement>((props, ref) => {
     ["rgb(0, 0, 0)", "rgb(255, 255, 255)"]
   );
 
-  // Split text into individual characters
-  const characters = titleText.split('');
-
   return (
     <motion.div 
       ref={ref}
@@ -150,37 +147,18 @@ const TeamSection = React.forwardRef<HTMLDivElement>((props, ref) => {
       className="relative z-10 py-20 min-h-screen flex flex-col justify-center"
     >
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        {/* Team Title with letter-by-letter animation */}
+        {/* Team Title with fade animation */}
         <div className="text-center mb-16">
-          <h2 
-            className="text-2xl md:text-4xl lg:text-5xl xl:text-6xl font-bold leading-tight mb-6"
+          <motion.h2 
+            className="text-2xl md:text-4xl lg:text-5xl xl:text-6xl font-bold leading-tight mb-6 text-black"
             style={{
               fontWeight: 700,
-              letterSpacing: '-0.02em'
+              letterSpacing: '-0.02em',
+              opacity: useTransform(scrollYProgress, [0, 1], [0, 1])
             }}
           >
-            {characters.map((char, index) => {
-              // Calculate when this character should start appearing
-              const start = index / characters.length;
-              const end = (index + 1) / characters.length;
-              
-              const opacity = useTransform(
-                scrollYProgress,
-                [start, end],
-                [0, 1]
-              );
-
-              return (
-                <motion.span
-                  key={index}
-                  style={{ opacity }}
-                  className="text-black"
-                >
-                  {char}
-                </motion.span>
-              );
-            })}
-          </h2>
+            {titleText}
+          </motion.h2>
           
           <motion.p 
             style={{
@@ -349,7 +327,6 @@ export default function HeroSection() {
   const containerRef = useRef<HTMLDivElement>(null);
   const videoRef = useRef<HTMLVideoElement>(null);
   const teamSectionRef = useRef<HTMLDivElement>(null);
-  const [isVideoLoaded, setIsVideoLoaded] = useState(false);
 
   const { scrollYProgress } = useScroll({
     target: containerRef,
@@ -372,7 +349,6 @@ export default function HeroSection() {
   useEffect(() => {
     const video = videoRef.current;
     if (video) {
-      video.addEventListener('loadeddata', () => setIsVideoLoaded(true));
       video.play().catch(console.error);
     }
   }, []);

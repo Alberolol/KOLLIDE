@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect, useRef, useState } from "react";
+import { useEffect, useRef } from "react";
 import { motion, useScroll, useTransform } from "framer-motion";
 import Image from "next/image";
 import StickyNav from "@/components/StickyNav";
@@ -15,41 +15,19 @@ function MTL3DImpactText() {
     offset: ["start 0.9", "start 0.1"]
   });
 
-  // Split text into individual characters while preserving spaces
-  const characters = text.split('');
-  
   return (
     <section ref={containerRef} className="min-h-screen flex items-center justify-center bg-black py-20">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        <h2 
+        <motion.h2 
           className="text-2xl md:text-4xl lg:text-5xl xl:text-6xl font-bold text-white leading-tight"
           style={{
             fontWeight: 700,
-            letterSpacing: '-0.02em'
+            letterSpacing: '-0.02em',
+            opacity: useTransform(scrollYProgress, [0, 1], [0, 1])
           }}
         >
-          {characters.map((char, index) => {
-            // Calculate when this character should start appearing
-            const start = index / characters.length;
-            const end = (index + 1) / characters.length;
-            
-            const opacity = useTransform(
-              scrollYProgress,
-              [start, end],
-              [0, 1]
-            );
-
-            return (
-              <motion.span
-                key={index}
-                style={{ opacity }}
-                className="text-white"
-              >
-                {char}
-              </motion.span>
-            );
-          })}
-        </h2>
+          {text}
+        </motion.h2>
       </div>
     </section>
   );
@@ -58,7 +36,6 @@ function MTL3DImpactText() {
 export default function MTL3DPage() {
   const containerRef = useRef<HTMLDivElement>(null);
   const videoRef = useRef<HTMLVideoElement>(null);
-  const [isVideoLoaded, setIsVideoLoaded] = useState(false);
 
   const { scrollYProgress } = useScroll({
     target: containerRef,
@@ -75,7 +52,6 @@ export default function MTL3DPage() {
   useEffect(() => {
     const video = videoRef.current;
     if (video) {
-      video.addEventListener('loadeddata', () => setIsVideoLoaded(true));
       video.play().catch(console.error);
     }
   }, []);

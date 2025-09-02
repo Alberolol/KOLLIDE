@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect, useRef, useState } from "react";
+import { useEffect, useRef } from "react";
 import { motion, useScroll, useTransform } from "framer-motion";
 import Image from "next/image";
 import K3DImpactText from "@/components/K3DImpactText";
@@ -67,7 +67,6 @@ function ScrollControlledVideo() {
 export default function K3DPage() {
   const containerRef = useRef<HTMLDivElement>(null);
   const videoRef = useRef<HTMLVideoElement>(null);
-  const [isVideoLoaded, setIsVideoLoaded] = useState(false);
 
   const { scrollYProgress } = useScroll({
     target: containerRef,
@@ -84,7 +83,6 @@ export default function K3DPage() {
   useEffect(() => {
     const video = videoRef.current;
     if (video) {
-      video.addEventListener('loadeddata', () => setIsVideoLoaded(true));
       video.play().catch(console.error);
     }
   }, []);
@@ -313,7 +311,7 @@ export default function K3DPage() {
             </h2>
             
             <p className="text-xl md:text-2xl text-gray-300 max-w-2xl mx-auto leading-relaxed">
-              Discover the full range of K3D's revolutionary helmet technology and see how we're transforming protection across sports.
+              Discover the full range of K3D&apos;s revolutionary helmet technology and see how we&apos;re transforming protection across sports.
             </p>
 
             <motion.div
