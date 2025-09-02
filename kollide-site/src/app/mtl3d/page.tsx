@@ -10,24 +10,41 @@ function MTL3DImpactText() {
   const text = "We provide on‑demand 3D printing services in Montreal. From rapid prototyping to short‑run production, we deliver precision parts using advanced technologies like FDM, SLA, SLS, and MJF across a wide range of materials.";
   const containerRef = useRef<HTMLDivElement>(null);
   
-  const { scrollYProgress } = useScroll({
-    target: containerRef,
-    offset: ["start 0.9", "start 0.1"]
-  });
+  // Split text into individual characters while preserving spaces
+  const characters = text.split('');
 
   return (
     <section ref={containerRef} className="min-h-screen flex items-center justify-center bg-black py-20">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        <motion.h2 
+        <h2 
           className="text-2xl md:text-4xl lg:text-5xl xl:text-6xl font-bold text-white leading-tight"
           style={{
             fontWeight: 700,
-            letterSpacing: '-0.02em',
-            opacity: useTransform(scrollYProgress, [0, 1], [0, 1])
+            letterSpacing: '-0.02em'
           }}
         >
-          {text}
-        </motion.h2>
+          {characters.map((char, index) => {
+            // Calculate when this character should start appearing
+            const start = index / characters.length;
+            const end = (index + 1) / characters.length;
+            
+            return (
+              <motion.span
+                key={index}
+                className="text-white"
+                initial={{ opacity: 0 }}
+                whileInView={{ opacity: 1 }}
+                viewport={{ once: true }}
+                transition={{
+                  delay: start * 2, // Stagger the animation
+                  duration: (end - start) * 2
+                }}
+              >
+                {char}
+              </motion.span>
+            );
+          })}
+        </h2>
       </div>
     </section>
   );
