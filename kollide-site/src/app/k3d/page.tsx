@@ -5,6 +5,7 @@ import { motion, useScroll, useTransform } from "framer-motion";
 import Image from "next/image";
 import K3DImpactText from "@/components/K3DImpactText";
 import StickyNav from "@/components/StickyNav";
+import { useNavigation } from "@/components/NavigationProvider";
 
 // Scroll-controlled video component
 function ScrollControlledVideo() {
@@ -65,6 +66,7 @@ function ScrollControlledVideo() {
 }
 
 export default function K3DPage() {
+  const { isHamburgerMenuOpen, setIsHamburgerMenuOpen } = useNavigation();
   const containerRef = useRef<HTMLDivElement>(null);
   const videoRef = useRef<HTMLVideoElement>(null);
 
@@ -87,10 +89,14 @@ export default function K3DPage() {
     }
   }, []);
 
+  const handleMenuClose = () => {
+    setIsHamburgerMenuOpen(false);
+  };
+
   return (
     <div className="relative min-h-screen overflow-hidden">
       {/* Sticky Navigation */}
-      <StickyNav />
+      <StickyNav isHamburgerMenuOpen={isHamburgerMenuOpen} onMenuClose={handleMenuClose} />
       
       {/* Hero Container */}
       <motion.div
@@ -178,8 +184,8 @@ export default function K3DPage() {
             className="relative w-full aspect-video rounded-2xl overflow-hidden"
           >
             <Image
-              src="/media/images/helmet.jpeg"
-              alt="K3D Helmet Technology"
+              src="/media/images/inside helmet.jpeg"
+              alt="K3D Helmet Interior Technology"
               fill
               className="object-cover"
             />

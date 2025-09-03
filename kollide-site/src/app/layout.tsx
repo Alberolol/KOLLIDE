@@ -1,8 +1,7 @@
 import type { Metadata } from "next";
-import Link from "next/link";
 import { Geist, Geist_Mono } from "next/font/google";
 import "./globals.css";
-import { LenisProvider } from "@/components/LenisProvider";
+import ClientLayout from "@/components/ClientLayout";
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -29,18 +28,9 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body className={`${geistSans.variable} ${geistMono.variable} antialiased`}>
-        <LenisProvider>
+        <ClientLayout>
           {children}
-          <footer className="mx-auto max-w-6xl px-6 py-10 text-sm text-white/60">
-            <div className="flex flex-wrap items-center justify-between gap-4 border-t border-white/10 pt-6">
-              <p>© {new Date().getFullYear()} KOLLIDE</p>
-              <div className="flex gap-4">
-                <Link href="/k3d" className="hover:text-white">K3D</Link>
-                <Link href="/mtl3d" className="hover:text-white">MTL3D</Link>
-              </div>
-            </div>
-          </footer>
-        </LenisProvider>
+        </ClientLayout>
       </body>
     </html>
   );

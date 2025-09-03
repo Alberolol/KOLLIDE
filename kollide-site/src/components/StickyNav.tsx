@@ -5,7 +5,12 @@ import { motion, AnimatePresence } from "framer-motion";
 import Link from "next/link";
 import Image from "next/image";
 
-export default function StickyNav() {
+interface StickyNavProps {
+  isHamburgerMenuOpen?: boolean;
+  onMenuClose?: () => void;
+}
+
+export default function StickyNav({ isHamburgerMenuOpen = false, onMenuClose }: StickyNavProps) {
   const [isVisible, setIsVisible] = useState(false);
 
   useEffect(() => {
@@ -19,9 +24,12 @@ export default function StickyNav() {
     return () => window.removeEventListener("scroll", handleScroll);
   }, []);
 
+  // If hamburger menu is open, always show the nav (sticky mode)
+  const shouldShowNav = isHamburgerMenuOpen || isVisible;
+
   return (
     <AnimatePresence>
-      {isVisible && (
+      {shouldShowNav && (
         <motion.nav
           initial={{ y: -100, opacity: 0 }}
           animate={{ y: 0, opacity: 1 }}
@@ -47,36 +55,36 @@ export default function StickyNav() {
                 <Link
                   href="/k3d"
                   className="text-white/80 hover:text-white transition-colors duration-200"
+                  onClick={onMenuClose}
                 >
                   K3D
                 </Link>
                 <Link
                   href="/mtl3d"
                   className="text-white/80 hover:text-white transition-colors duration-200"
+                  onClick={onMenuClose}
                 >
                   MTL3D
                 </Link>
                 <Link
                   href="/about"
                   className="text-white/80 hover:text-white transition-colors duration-200"
+                  onClick={onMenuClose}
                 >
                   About
                 </Link>
                 <Link
                   href="/contact"
                   className="text-white/80 hover:text-white transition-colors duration-200"
+                  onClick={onMenuClose}
                 >
                   Contact
                 </Link>
               </div>
 
-              {/* Mobile menu button */}
+              {/* Mobile menu - handled by HamburgerMenu component */}
               <div className="md:hidden">
-                <button className="text-white/80 hover:text-white p-2">
-                  <svg className="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4 6h16M4 12h16M4 18h16" />
-                  </svg>
-                </button>
+                {/* Space reserved for hamburger menu positioning */}
               </div>
             </div>
           </div>

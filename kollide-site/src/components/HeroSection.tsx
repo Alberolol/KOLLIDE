@@ -22,10 +22,10 @@ function TwoBoxSection({ teamScrollProgress }: { teamScrollProgress: import('fra
       className="relative z-10 py-8"
     >
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        <div className="flex gap-4" style={{ height: '80vh' }}>
+        <div className="flex flex-col md:flex-row gap-4" style={{ minHeight: '80vh', maxHeight: '90vh' }}>
           {/* Left Box - K3D */}
           <motion.div
-            className="flex-1 bg-transparent flex items-center justify-center relative overflow-hidden group cursor-pointer"
+            className="flex-1 bg-transparent flex items-center justify-center relative overflow-hidden group cursor-pointer min-h-[50vh] md:h-auto max-h-[90vh]"
             style={{ borderRadius: '2rem' }}
             initial={{ opacity: 0, y: 50 }}
             whileInView={{ opacity: 1, y: 0 }}
@@ -38,7 +38,7 @@ function TwoBoxSection({ teamScrollProgress }: { teamScrollProgress: import('fra
               muted
               loop
               playsInline
-              className="absolute inset-0 w-full h-full object-cover blur-none md:blur-sm md:group-hover:blur-none transition-all duration-300"
+              className="absolute inset-0 w-full h-full object-cover"
               ref={(video) => {
                 if (video) {
                   video.playbackRate = 0.67; // 33% slower
@@ -48,21 +48,30 @@ function TwoBoxSection({ teamScrollProgress }: { teamScrollProgress: import('fra
               <source src="/media/videos/k3d_preview.mp4" type="video/mp4" />
             </video>
 
-            {/* White overlay (50% by default, 0% on hover, transparent on mobile) */}
-            <div className="absolute inset-0 bg-transparent md:bg-white/50 md:group-hover:bg-transparent transition-colors duration-300" />
+            {/* White overlay (50% by default, 0% on hover, transparent on mobile/tablet) */}
+            <div className="absolute inset-0 bg-transparent xl:bg-white/50 xl:group-hover:bg-transparent transition-colors duration-300" />
             
             {/* K3D Logo (always visible, disappears on hover on desktop) */}
-            <Image
-              src="/media/logos/k3d_logo_black.png"
-              alt="K3D Logo"
-              width={200}
-              height={100}
-              className="relative z-10 opacity-100 transition-opacity duration-300 md:group-hover:opacity-0"
-            />
+            <div className="absolute top-8 left-1/2 transform -translate-x-1/2 z-10 xl:absolute xl:top-1/2 xl:left-1/2 xl:-translate-x-1/2 xl:-translate-y-1/2">
+              <Image
+                src="/media/logos/k3d_logo_white.png"
+                alt="K3D Logo"
+                width={120}
+                height={60}
+                className="opacity-100 transition-opacity duration-300 xl:group-hover:opacity-0 xl:hidden"
+              />
+              <Image
+                src="/media/logos/k3d_logo_black.png"
+                alt="K3D Logo"
+                width={200}
+                height={100}
+                className="opacity-100 transition-opacity duration-300 xl:group-hover:opacity-0 hidden xl:block"
+              />
+            </div>
 
-            {/* Text and button (visible on mobile, appear on hover on desktop) */}
-            <div className="absolute bottom-8 left-8 right-8 z-20 opacity-100 translate-y-0 md:opacity-0 md:group-hover:opacity-100 md:translate-y-4 md:group-hover:translate-y-0 transition-all duration-300">
-              <h3 className="text-white text-xl md:text-2xl font-semibold mb-4">
+            {/* Text and button (visible on mobile/tablet, appear on hover on desktop) */}
+            <div className="absolute bottom-8 left-8 right-8 z-20 opacity-100 translate-y-0 xl:opacity-0 xl:group-hover:opacity-100 xl:translate-y-4 xl:group-hover:translate-y-0 transition-all duration-300">
+              <h3 className="text-white text-xl xl:text-2xl font-semibold mb-4">
                 Transforming how products protect.
               </h3>
               <Link href="/k3d">
@@ -75,7 +84,7 @@ function TwoBoxSection({ teamScrollProgress }: { teamScrollProgress: import('fra
 
           {/* Right Box - MTL3D */}
           <motion.div
-            className="flex-1 bg-transparent flex items-center justify-center relative overflow-hidden group cursor-pointer"
+            className="flex-1 bg-transparent flex items-center justify-center relative overflow-hidden group cursor-pointer min-h-[50vh] md:h-auto max-h-[90vh]"
             style={{ borderRadius: '2rem' }}
             initial={{ opacity: 0, y: 50 }}
             whileInView={{ opacity: 1, y: 0 }}
@@ -88,7 +97,7 @@ function TwoBoxSection({ teamScrollProgress }: { teamScrollProgress: import('fra
               muted
               loop
               playsInline
-              className="absolute inset-0 w-full h-full object-cover blur-none md:blur-sm md:group-hover:blur-none transition-all duration-300"
+              className="absolute inset-0 w-full h-full object-cover"
               ref={(video) => {
                 if (video) {
                   video.playbackRate = 0.67; // 33% slower
@@ -98,17 +107,19 @@ function TwoBoxSection({ teamScrollProgress }: { teamScrollProgress: import('fra
               <source src="/media/videos/3D print2.mp4" type="video/mp4" />
             </video>
 
-            {/* White overlay (50% by default, 0% on hover, transparent on mobile) */}
-            <div className="absolute inset-0 bg-transparent md:bg-white/50 md:group-hover:bg-transparent transition-colors duration-300" />
+            {/* White overlay (50% by default, 0% on hover, transparent on mobile/tablet) */}
+            <div className="absolute inset-0 bg-transparent xl:bg-white/50 xl:group-hover:bg-transparent transition-colors duration-300" />
             
             {/* MTL3D Text (always visible, disappears on hover on desktop) */}
-            <div className="relative z-10 text-black text-4xl md:text-5xl font-bold opacity-100 transition-opacity duration-300 md:group-hover:opacity-0">
-              MTL3D
+            <div className="absolute top-8 left-1/2 transform -translate-x-1/2 z-10 xl:absolute xl:top-1/2 xl:left-1/2 xl:-translate-x-1/2 xl:-translate-y-1/2">
+              <div className="text-white xl:text-black text-2xl xl:text-5xl font-bold opacity-100 transition-opacity duration-300 xl:group-hover:opacity-0">
+                MTL3D
+              </div>
             </div>
 
-            {/* Text and button (visible on mobile, appear on hover on desktop) */}
-            <div className="absolute bottom-8 left-8 right-8 z-20 opacity-100 translate-y-0 md:opacity-0 md:group-hover:opacity-100 md:translate-y-4 md:group-hover:translate-y-0 transition-all duration-300">
-              <h3 className="text-white text-xl md:text-2xl font-semibold mb-4">
+            {/* Text and button (visible on mobile/tablet, appear on hover on desktop) */}
+            <div className="absolute bottom-8 left-8 right-8 z-20 opacity-100 translate-y-0 xl:opacity-0 xl:group-hover:opacity-100 xl:translate-y-4 xl:group-hover:translate-y-0 transition-all duration-300">
+              <h3 className="text-white text-xl xl:text-2xl font-semibold mb-4">
                 On-demand 3D printing at scale.
               </h3>
               <Link href="/mtl3d">
@@ -251,7 +262,7 @@ function ContactSection() {
               whileInView={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.8, delay: 0.2 }}
               viewport={{ once: true }}
-              className="text-4xl md:text-5xl lg:text-6xl font-bold text-white text-center mb-16"
+              className="text-4xl md:text-5xl lg:text-6xl font-bold text-white text-center mb-12"
               style={{
                 fontWeight: 700,
                 letterSpacing: '-0.02em'
